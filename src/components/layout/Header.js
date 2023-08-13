@@ -26,7 +26,7 @@ function Header() {
       </div>
     </div>
 
-    <div className={`absolute z-50 w-[70%] md:left-0 ${isOpen ? 'left-0' : '-left-[100%]'} bg-side-bg  md:w-[20%] h-full items-center flex flex-col py-4 px-4 md:fixed duration-500`}>
+    <div className={`fixed z-50 w-[70%] md:left-0 ${isOpen ? 'left-0' : '-left-[100%]'} bg-side-bg  md:w-[20%] h-full items-center flex flex-col py-4 px-4 md:fixed duration-500`}>
     
      <span className='border-b-[#ffffff65] border-b-[1px] py-2 flex justify-between items-center'>
        <img className='w-[70%]' src={Logo} alt='BVRIT'/>
