@@ -14,7 +14,7 @@ function Header() {
   const toggle = () => setIsOpen(!isOpen)
   return (
     <div>
-    <div className='items-center flex justify-between  bg-white absolute z-50 top-0 w-full  md:ml-[20%] py-5 px-5 shadow-md'>
+    <div className='fixed items-center flex justify-between  bg-white  z-50 top-0 w-full  md:ml-[20%] py-5 px-5 shadow-md'>
       <div className='md:hidden flex gap-3 items-center'>
         <AiOutlineMenu size={28} onClick={toggle}/>
         <img className='h-10' src={Logo} alt='logo'/>
@@ -26,7 +26,7 @@ function Header() {
       </div>
     </div>
 
-    <div className={`fixed z-50 w-[70%] md:left-0 ${isOpen ? 'left-0' : '-left-[100%]'} bg-side-bg  md:w-[20%] h-full items-center flex flex-col py-4 px-4 md:fixed duration-500`}>
+    <div className={`absolute z-50 w-[70%] md:left-0 ${isOpen ? 'left-0' : '-left-[100%]'} bg-side-bg  md:w-[20%] h-full items-center flex flex-col py-4 px-4 md:fixed duration-500`}>
     
      <span className='border-b-[#ffffff65] border-b-[1px] py-2 flex justify-between items-center'>
        <img className='w-[70%]' src={Logo} alt='BVRIT'/>
