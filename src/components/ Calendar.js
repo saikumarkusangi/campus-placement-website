@@ -1,12 +1,8 @@
-import React, { useState } from 'react'
-import {IoIosArrowForward,IoIosArrowBack} from 'react-icons/io';
-import { differenceInDays, endOfMonth, format, startOfMonth } from 'date-fns';
-import { add, sub } from 'date-fns/esm';
-
-const daysOfWeek = [
-  "Sun","Mon","Tue","Wed","Thu","Fri","Sat"
-];
-
+import React from 'react'
+import FullCalendar from '@fullcalendar/react'
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction';
 const events = 
 
     [
@@ -19,61 +15,38 @@ const events =
       ]
   
   
- function Calendar({value,onChange}) {
-    const startDate = startOfMonth(value);
-    const endDate = endOfMonth(value);
-    const numDays = differenceInDays(endDate,startDate)+1;
-    const prefixDays = startDate.getDay();
-    const suffixDays = 6 - endDate.getDay();
-
-    const prevMonth = () => onChange(sub(value , {months:1}));
-    const NextMonth = () => onChange(add(value , {months:1}));
+ function Calendar() {
+    const role = 'Admin'
     return (
-      <div className='bg-white  md:h-full px-3 py-4 rounded-md w-full  '>
-        <div className='items-center justify-between text-center'>
-          <div className='flex w-[90vw] justify-between'>
-            <IoIosArrowBack onClick={prevMonth} className='' size={32}/>
-            <p className='text-xl font-oswald font-semibold'>{format(value , 'LLLL yyyy')}</p>
-            <IoIosArrowForward onClick={NextMonth} className=''  size={32}/>
-          </div>
-         <div className='mt-5 flex justify-between border-[1px] border-black'>
-         {daysOfWeek.map(day => {
-          return(
-           <div key={day} className='text-sm font-bold font-roboto border-l-0 border-black w-full  py-3 text-center border-[1px]'>{day}</div>
-          )
-         })}
-         </div>
-         
-        <div className='grid grid-cols-7 border-[1px] border-t-0 border-black '>
-        {Array.from({length:prefixDays}).map((_,index) =>{
-            return(
-              <div key={index} className="px-5 py-5 border-[1px]  border-t-0 border-[#7a7a7a7b]"></div>
-            )
-          })
-         }
-         {Array.from({length:numDays}).map((_,index) =>{
-          const date = index + 1;
-          return(
-            <div key={index} className={`relative px-5 ${date == 12 && 'bg-red-200 '} py-5 border-[1px] border-t-0 border-[#7a7a7a7b]`}>
-              {date == 12 && <img className='absolute bottom-2 left-0 ' src='https://cdn.cookielaw.org/logos/2396a178-b290-4b3f-bf3f-5be727810e2a/31641acd-0a90-4c01-b06b-16df2fa8573b/9285c36b-ce29-4f1e-9d50-fcdadd882498/Acc_Logo_Black_Purple_RGB.png' alt='logo'/>}
-              {date}
-            </div>
-          )
-         })}
-         {Array.from({length:suffixDays}).map((_,index) =>{
-          return(
-            <div key={index} className="px-5 py-5 border-[1px] border-t-0 border-[#7a7a7a7b]"></div>
-          )
-        })
-       }
-        </div>
-
-        </div>
-        
+      <div className='bg-white w-[100vw] md:w-[70vw]'>
+        <FullCalendar
+          plugins={[dayGridPlugin,timeGridPlugin,interactionPlugin]}
+          initialView={'dayGridMonth'}
+          headerToolbar={{
+            end:'prev,next',
+            start:'',
+            center:'title',
+            // end:'dayGridMonth,timeGridWeek',
+          }}
+          
+          height={'100vh'}
+          eventBorderColor='white'
+          events={events}
+          eventContent={renderEventContent}
+        />
       </div>
     )
   }
-
-
+  
+  // a custom render function
+  function renderEventContent(eventInfo) {
+    return (
+    
+      <div className={`${eventInfo.event.color}` }>
+        <p className='text-black whitespace-normal text-[10px] md:text-[14px] text-center'>{eventInfo.event.title}</p>
+        <img className='w-full md:px-4 md:py-0 py-2 md:h-20 object-contain' src={eventInfo.event.url} alt='img'/>
+      </div>
+    )
+  }
 
 export default Calendar
